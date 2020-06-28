@@ -55,7 +55,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('usuarios') }}">
                                     <i class="fas fa-chalkboard-teacher"></i> &nbsp;
                                     {{ __('Usuário') }}
                                 </a>
