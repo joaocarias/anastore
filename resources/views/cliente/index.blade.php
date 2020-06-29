@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header  text-white bg-dark">Usuários</div>
+                <div class="card-header  text-white bg-dark">Clientes</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,15 @@
                     </div>
                     @endif
 
-                    @if( isset($usuarios) && count($usuarios) > 0 )
+                    <div class="row">
+                        <div class="col col-12">
+                            <a href="{{ route('novo_cliente') }}" class="btn btn-dark btn-sm mb-3">
+                                <i class="far fa-file"></i> Novo Cadastro
+                            </a>
+                        </div>
+                    </div>
+
+                    @if( isset($clientes) && count($clientes) > 0 )
 
                     <table class="table table-striped table-sm">
                         <thead>
@@ -22,18 +30,22 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">E-Mail</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Cidade</th>
                                 <th scope="col">Data de Criação</th>
                                 <th scope="col">Data Updade</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($usuarios as $usuario)
+                            @foreach ($clientes as $item)
                             <tr>
-                                <th scope="row">{{ __($usuario->id) }}</th>
-                                <td>{{ __($usuario->name)  }}</td>
-                                <td>{{ __($usuario->email)  }}</td>
-                                <td>{{ __($usuario->created_at->format('d/m/Y H:i:s'))  }}</td>
-                                <td>{{ __($usuario->updated_at->format('d/m/Y H:i:s'))  }}</td>
+                                <th scope="row">{{ __($item->id) }}</th>
+                                <td>{{ __($item->nome)  }}</td>
+                                <td>{{ __($item->email) }}
+                                <td>{{ __($item->telefone)  }}</td>
+                                <td>{{ __($item->cidade->nome . " - " . $item->cidade->uf)  }}</td>
+                                <td>{{ __($item->created_at->format('d/m/Y H:i:s'))  }}</td>
+                                <td>{{ __($item->updated_at->format('d/m/Y H:i:s'))  }}</td>
                             </tr>
                             @endforeach
                         </tbody>

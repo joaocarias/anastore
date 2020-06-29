@@ -28,8 +28,6 @@
     <!-- Summernote -->
     <link href="{{ asset('lib/summernote/summernote.min.css') }}" rel="stylesheet">
 
-
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -54,6 +52,18 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{{ route('clientes') }}">
+                                <i class="fas fa-person-booth"></i> &nbsp;
+                                    {{ __('Cliente') }}
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" href="{{ route('cidades') }}">
+                                    <i class="fas fa-city"></i> &nbsp;
+                                    {{ __('Cidade') }}
+                                </a>
 
                                 <a class="dropdown-item" href="{{ route('usuarios') }}">
                                     <i class="fas fa-chalkboard-teacher"></i> &nbsp;
