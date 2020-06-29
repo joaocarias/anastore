@@ -54,8 +54,25 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                 <a class="dropdown-item" href="{{ route('clientes') }}">
-                                <i class="fas fa-person-booth"></i> &nbsp;
+                                    <i class="fas fa-person-booth"></i> &nbsp;
                                     {{ __('Cliente') }}
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" href="{{ route('categoria_produtos') }}">
+                                    <i class="fas fa-atlas"></i> &nbsp;
+                                    {{ __('Categorias de Produto') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('cores') }}">
+                                    <i class="fas fa-bullseye"></i> &nbsp;
+                                    {{ __('Cores de Produto') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('tamanho_produtos') }}">
+                                    <i class="fab fa-diaspora"></i> &nbsp;
+                                    {{ __('Tamanhos de Produto') }}
                                 </a>
 
                                 <div class="dropdown-divider"></div>
@@ -64,6 +81,8 @@
                                     <i class="fas fa-city"></i> &nbsp;
                                     {{ __('Cidade') }}
                                 </a>
+
+                                <div class="dropdown-divider"></div>
 
                                 <a class="dropdown-item" href="{{ route('usuarios') }}">
                                     <i class="fas fa-chalkboard-teacher"></i> &nbsp;
@@ -95,7 +114,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="fas fa-sign-out-alt"></i> {{ __('Sair') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
