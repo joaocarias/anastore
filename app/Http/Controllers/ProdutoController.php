@@ -2,39 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Dados\Repositorios\RepositorioCategoriaProduto;
+use App\Dados\Repositorios\RepositorioCor;
+use App\Dados\Repositorios\RepositorioProduto;
+use App\Dados\Repositorios\RepositorioTamanhoProduto;
+use App\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProdutoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $repositorio = new RepositorioProduto();
+        $produtos = $repositorio->ObterTodos();
+        return view('produto.index', ['produtos' => $produtos]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
-    }
+        $repositorioCategoriaProduto = new RepositorioCategoriaProduto();
+        $categoriaProdutos = $repositorioCategoriaProduto->ObterTodos();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+        $repositorioTamanhoProduto = new RepositorioTamanhoProduto();
+        $tamanhoProdutos = $repositorioTamanhoProduto->ObterTodos();
+
+        $repositorioCor = new RepositorioCor();
+        $cores = $repositorioCor->ObterTodos();
+
+        return view('produto.create', ['model' => null
+                        , 'categoriaProdutos' => $categoriaProdutos
+                        , 'tamanhoProdutos' => $tamanhoProdutos
+                        , 'cores' => $cores      
+                    ]);
+    }
+    
     public function store(Request $request)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:1|max:254',
+        ];
+       
+        $messagens = [
+            'required' => 'Campo Obrigatório!',
+            'nome.required' => 'Campo Obrigatório!',
+            'nome.min' => 'É necessário no mínimo 3 caracteres!',
+        ];
+       
+        $request->validate($regras, $messagens);
+        $obj = new Produto();
+        $obj->nome = mb_strtoupper( $request->input('nome') );  
+        $obj->categoria_produto_id = $request->input('categoria_produto_id') ;  
+        $obj->tamanho_produto_id = $request->input('tamanho_produto_id') ;
+        $obj->cor_id = $request->input('cor_id') ;
+        $obj->usuario_cadastro = Auth::user()->id;
+        $obj->save();
+        
+        return redirect()->route('produtos')->withStatus(__('Cadastro Realizado com Sucesso!')); 
     }
 
     /**

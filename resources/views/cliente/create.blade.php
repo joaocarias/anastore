@@ -69,7 +69,7 @@
                                     {{ __('Salvar') }}
                                 </button>
 
-                                <a href="{{ route('cidades') }}" class="btn btn-danger">
+                                <a href="{{ route('clientes') }}" class="btn btn-danger">
                                     <i class="far fa-times-circle"></i>
                                     {{ __('Cancelar') }}
                                 </a>

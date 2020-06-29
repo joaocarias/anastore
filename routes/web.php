@@ -43,4 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/categoria_produtos', 'CategoriaProdutoController@index')->name('categoria_produtos');
     Route::get('/categoria_produtos/novo', 'CategoriaProdutoController@create')->name('nova_categoria_produto');
     Route::post('/categoria_produtos/store', 'CategoriaProdutoController@store')->name('cadastrar_categoria_produto');
+
+    Route::get('/produtos', 'ProdutoController@index')->name('produtos');
+    Route::get('/produtos/novo', 'ProdutoController@create')->name('novo_produto');
+    Route::post('/produtos/store', 'ProdutoController@store')->name('cadastrar_produto');
 });
