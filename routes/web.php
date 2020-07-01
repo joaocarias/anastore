@@ -47,4 +47,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/produtos', 'ProdutoController@index')->name('produtos');
     Route::get('/produtos/novo', 'ProdutoController@create')->name('novo_produto');
     Route::post('/produtos/store', 'ProdutoController@store')->name('cadastrar_produto');
+
+    Route::get('/estoque_produtos', 'EstoqueProdutoController@index')->name('estoque_produtos');
+    Route::get('/estoque_produtos/novo', 'EstoqueProdutoController@create')->name('nova_entrada_estoque_produto');
+    Route::post('/estoque_produtos/store', 'EstoqueProdutoController@store')->name('cadastrar_entrada_estoque_produto');
+
+    
 });
