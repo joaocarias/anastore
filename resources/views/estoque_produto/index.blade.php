@@ -22,7 +22,7 @@
                         </div>
                     </div>
 
-                    @if( isset($produtos) && count($produtos) > 0 )
+                    @if( isset($estoqueProdutos) && count($estoqueProdutos) > 0 )
 
                     <table class="table table-striped table-sm">
                         <thead>
@@ -32,16 +32,24 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Tamanho</th>
                                 <th scope="col">Cor</th>
+                                <th scope="col">Preço de Atacado</th>                                
+                                <th scope="col">Data de Estoque</th>
+                                <th scope="col">Preço</th> 
+                                <th scope="col">Quantidade</th>                               
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($produtos as $item)
+                            @foreach ($estoqueProdutos as $item)
                             <tr>
                                 <th scope="row">{{ __($item->id) }}</th>
-                                <td>{{ __($item->nome)  }}</td>
-                                <td>{{ __($item->categoria->nome)  }}</td>
-                                <td>{{ __($item->tamanho->nome)  }}</td>
-                                <td>{{ __($item->cor->nome)  }}</td>
+                                <td>{{ __($item->produto->nome)  }}</td>
+                                <td>{{ __($item->produto->categoria->nome)  }}</td>
+                                <td>{{ __($item->produto->tamanho->nome)  }}</td>
+                                <td>{{ __($item->produto->cor->nome)  }}</td>
+                                <td>{{ __("R$ " . $item->valorCompraBR()) }}</td>
+                                <td>{{ __($item->dataCompraBr()) }}</td>
+                                <td>{{ __($item->produto->preco) }}</td>
+                                <td>{{ __($item->quantidade) }}</td>                                
                             </tr>
                             @endforeach
                         </tbody>

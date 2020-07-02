@@ -55,7 +55,9 @@ class ProdutoController extends Controller
         $obj->categoria_produto_id = $request->input('categoria_produto_id') ;  
         $obj->tamanho_produto_id = $request->input('tamanho_produto_id') ;
         $obj->cor_id = $request->input('cor_id') ;
+        $obj->definirPrecoUS($request->input('preco')) ;
         $obj->usuario_cadastro = Auth::user()->id;
+        
         $obj->save();
         
         return redirect()->route('produtos')->withStatus(__('Cadastro Realizado com Sucesso!')); 

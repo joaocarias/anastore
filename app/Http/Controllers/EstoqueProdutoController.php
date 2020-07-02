@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Dados\Repositorios\RepositorioEstoqueProduto;
+use App\Dados\Repositorios\RepositorioProduto;
+use App\EstoqueProduto;
+use App\Lib\Auxiliar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EstoqueProdutoController extends Controller
 {
@@ -16,12 +20,27 @@ class EstoqueProdutoController extends Controller
 
     public function create()
     {
-        
+        $repositorioProduto = new RepositorioProduto();
+        $produtos = $repositorioProduto->ObterTodos();
+
+        return view('estoque_produto.create', ['model' => null
+                        , 'produtos' => $produtos
+                    ]);
     }
 
     public function store(Request $request)
     {
+        $obj = new EstoqueProduto();
+        $obj->produto_id = mb_strtoupper( $request->input('produto_id') );  
+        $obj->quantidade = $request->input('quantidade') ;  
+        $obj->data_compra = Auxiliar::converterDataParaUSA($request->input('data_compra'));
+        $obj->definirValorCompraUS($request->input('valor_compra')) ;
+        $obj->usuario_cadastro = Auth::user()->id;
         
+        $obj->save();
+        
+        return redirect()->route('estoque_produtos')->withStatus(__('Cadastro Realizado com Sucesso!')); 
+
     }
 
     public function show($id)

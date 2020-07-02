@@ -24,4 +24,18 @@ class Produto extends Model
     {
         return $this->hasOne(Cor::class, 'id', 'cor_id');
     }
+
+    public function converterMoedaParaUS($valor){
+        $str = str_replace('.', '', $valor); 
+        return str_replace(',', '.', $str);        
+    }
+
+    public function definirPrecoUS($valor){
+        $str = str_replace('.', '', $valor); 
+        $this->preco = str_replace(',', '.', $str);        
+    }
+
+    public function precoBR(){         
+        return number_format($this->preco, 2, ',', '.');
+    }
 }

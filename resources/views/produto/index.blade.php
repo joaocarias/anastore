@@ -32,6 +32,7 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Tamanho</th>
                                 <th scope="col">Cor</th>
+                                <th scope="col">Preço</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,7 @@
                                 <td>{{ __($item->categoria->nome)  }}</td>
                                 <td>{{ __($item->tamanho->nome)  }}</td>
                                 <td>{{ __($item->cor->nome)  }}</td>
+                                <td>R$ {{ __($item->precoBR()) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
