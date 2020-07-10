@@ -48,6 +48,26 @@
 
                     @Auth
                     <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Caixa') }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{{ route('estoque_produtos') }}">
+                                <i class="fas fa-shopping-cart"></i> &nbsp;
+                                    {{ __('Venda') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('estoque_produtos') }}">
+                                <i class="fas fa-cash-register"></i> &nbsp;
+                                    {{ __('Pagamento') }}
+                                </a>
+
+                            </div>
+                        </li>
+                        
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Cadastro') }} <span class="caret"></span>
@@ -80,6 +100,13 @@
                                 <a class="dropdown-item" href="{{ route('tamanho_produtos') }}">
                                     <i class="fab fa-diaspora"></i> &nbsp;
                                     {{ __('Tamanhos de Produto') }}
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" href="{{ route('formas_pagamento') }}">
+                                <i class="fas fa-cash-register"></i> &nbsp;
+                                    {{ __('Formas de Pagamento') }}
                                 </a>
 
                                 <div class="dropdown-divider"></div>

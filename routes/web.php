@@ -52,5 +52,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/estoque_produtos/novo', 'EstoqueProdutoController@create')->name('nova_entrada_estoque_produto');
     Route::post('/estoque_produtos/store', 'EstoqueProdutoController@store')->name('cadastrar_entrada_estoque_produto');
 
+    Route::get('/formas_pagamento', 'FormaPagamentoController@index')->name('formas_pagamento');
+    Route::get('/formas_pagamento/novo', 'FormaPagamentoController@create')->name('nova_forma_pagamento');
+    Route::post('/formas_pagamento/store', 'FormaPagamentoController@store')->name('cadastrar_forma_pagamento');
+
     
 });
