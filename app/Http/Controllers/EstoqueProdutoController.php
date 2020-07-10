@@ -31,7 +31,7 @@ class EstoqueProdutoController extends Controller
     public function store(Request $request)
     {
         $obj = new EstoqueProduto();
-        $obj->produto_id = mb_strtoupper( $request->input('produto_id') );  
+        $obj->produto_id = $request->input('produto_id') ;  
         $obj->quantidade = $request->input('quantidade') ;  
         $obj->data_compra = Auxiliar::converterDataParaUSA($request->input('data_compra'));
         $obj->definirValorCompraUS($request->input('valor_compra')) ;

@@ -48,7 +48,7 @@
                                 <td>{{ __($item->produto->cor->nome)  }}</td>
                                 <td>{{ __("R$ " . $item->valorCompraBR()) }}</td>
                                 <td>{{ __($item->dataCompraBr()) }}</td>
-                                <td>{{ __($item->produto->preco) }}</td>
+                                <td>{{ __("R$ " . $item->produto->precoBR()) }}</td>
                                 <td>{{ __($item->quantidade) }}</td>                                
                             </tr>
                             @endforeach

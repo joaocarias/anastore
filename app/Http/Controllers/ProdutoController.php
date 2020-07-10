@@ -6,6 +6,8 @@ use App\Dados\Repositorios\RepositorioCategoriaProduto;
 use App\Dados\Repositorios\RepositorioCor;
 use App\Dados\Repositorios\RepositorioProduto;
 use App\Dados\Repositorios\RepositorioTamanhoProduto;
+use App\EstoqueProduto;
+use App\Lib\Auxiliar;
 use App\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +61,17 @@ class ProdutoController extends Controller
         $obj->usuario_cadastro = Auth::user()->id;
         
         $obj->save();
+
+        if(isset($obj) && $obj->id > 0){
+            $objEst = new EstoqueProduto();
+            $objEst->produto_id = $obj->id;  
+            $objEst->quantidade = $request->input('quantidade') ;  
+            $objEst->data_compra = Auxiliar::converterDataParaUSA($request->input('data_compra'));
+            $objEst->definirValorCompraUS($request->input('valor_compra')) ;
+            $objEst->usuario_cadastro = Auth::user()->id;
+            
+            $objEst->save();            
+        }
         
         return redirect()->route('produtos')->withStatus(__('Cadastro Realizado com Sucesso!')); 
     }
