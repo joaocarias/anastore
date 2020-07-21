@@ -2,7 +2,7 @@
 
 namespace App\Dados\IRepositorios;
 
-interface IRepositorioCliente{
+interface IRepositorioVenda
+{
     public function ObterTodos();
-    public function Obter($id);
 }

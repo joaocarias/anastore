@@ -56,5 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/formas_pagamento/novo', 'FormaPagamentoController@create')->name('nova_forma_pagamento');
     Route::post('/formas_pagamento/store', 'FormaPagamentoController@store')->name('cadastrar_forma_pagamento');
 
-    
+    Route::get('/vendas', 'VendaController@index')->name('vendas');
+    Route::get('/vendas/novo', 'VendaController@create')->name('nova_venda');
+    Route::post('/vendas/store', 'VendaController@store')->name('cadastrar_venda');
 });

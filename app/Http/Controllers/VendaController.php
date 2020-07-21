@@ -2,28 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Dados\Repositorios\RepositorioCliente;
+use App\Dados\Repositorios\RepositorioProduto;
+use App\Dados\Repositorios\RepositorioVenda;
 use Illuminate\Http\Request;
 
 class VendaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $repositorioVenda = new RepositorioVenda();
+        $vendas = $repositorioVenda->ObterTodos();
+
+        return view('venda.index', ['vendas' => $vendas]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $repositorioCliente = new RepositorioCliente();
+        $repositorioProduto = new RepositorioProduto();
+       
+        $clientes = $repositorioCliente->ObterTodos();
+        $produtos = $repositorioProduto->ObterTodos();
+        
+        return view('venda.create', [
+            'model' => null, 'clientes' => $clientes, 'produtos' => $produtos
+        ]);
     }
 
     /**

@@ -9,4 +9,8 @@ class RepositorioCliente implements IRepositorioCliente{
     public function ObterTodos(){
         return Cliente::OrderBy('nome', 'asc')->get();
     }
+
+    public function Obter($id){
+        return Cliente::find($id);
+    }
 }

@@ -59,7 +59,7 @@
                                 <label for="data_compra" class="col-form-label text-md-right">{{ __('* Data de Compra (R$)') }}</label>
                                 <input id="data_compra" type="text" class="form-control @error('data_compra') is-invalid @enderror datepicker" name="data_compra" value="{{ old('data_compra', $data_compra ?? '') }}"  required>
 
-                                @error('data')
+                                @error('data_venda')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
