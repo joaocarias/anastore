@@ -106,12 +106,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">produto </th>
-                                        <td> produto </td>
-                                        <td> quantidade.text()</td>
-                                        <td> <a href="javascript:void(0);" class="btn btn-danger btn-sm btn-remove-produto"> <i class="far fa-trash-alt"></i> </a>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
 
@@ -126,7 +121,7 @@
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label for="sub_total_venda" class="col-form-label text-md-right">{{ __('* Total (R$)') }}</label>
+                            <label for="sub_total_venda" class="col-form-label text-md-right">{{ __('* Sub-Total (R$)') }}</label>
                             <input id="sub_total_venda" type="text" class="form-control @error('sub_total_venda') is-invalid @enderror mask_moeda_real" name="sub_total_venda" value="{{ old('sub_total_venda', $sub_total_venda ?? '') }}" required readonly>
 
                             @error('sub_total_venda')
@@ -149,7 +144,7 @@
 
                         <div class="col-md-3">
                             <label for="desconto_venda" class="col-form-label text-md-right">{{ __('* Desconto (%)') }}</label>
-                            <input id="desconto_venda" type="text" class="form-control @error('desconto_venda') is-invalid @enderror mask_moeda_real" name="desconto_venda" value="{{ old('desconto_venda', $desconto_venda ?? '') }}" required>
+                            <input id="desconto_venda" type="text" class="form-control @error('desconto_venda') is-invalid @enderror mask_porcetagem" name="desconto_venda" value="{{ old('desconto_venda', $desconto_venda ?? '') }}" required>
 
                             @error('desconto_venda')
                             <span class="invalid-feedback" role="alert">
@@ -186,10 +181,21 @@
 
 @section('javascript')
 <script>
-    $(document).ready(function() {
-        var _posicaoTabela = 0;
+    var _subTotal = 0.00;
+    var _desconto = 0.00;
+    var _procDesconto = 0.00;
+    var _total = diminuir(_subTotal, _desconto);
 
+    atualizarValoresVenda();
+
+    $(document).ready(function() {
+                var _posicaoTabela = 0;
+               
         $('.mask_moeda_real').mask("#.##0,00", {
+            reverse: true
+        });
+
+        $('.mask_porcetagem').mask('##0,00%', {
             reverse: true
         });
 
@@ -211,30 +217,92 @@
                     " <th scope=\"row\"> " + produto.val() + " </th> " +
                     " <td> " + produto.text() + " </td> " +
                     " <td> " + quantidade.text() + " </td> " +
-                    " <td>  <a href=\"javascript:void(0);\" class=\"btn btn-danger btn-sm btn-remove-produto\"> <i class=\"far fa-trash-alt\"></i> </a> " +
+                    " <td>  <a href=\"javascript:void(0);\" produto-id=\""+produto.val()+"\" produto-preco=\""+produto.attr("preco")+"\" quantidade-produto=\""+quantidade.val()+"\" class=\"btn btn-danger btn-sm btn-remove-produto\"> <i class=\"far fa-trash-alt\"></i> </a> " +
                     " </tr> ";
 
-
-                $(".table-produtos tbody").append(linha);
-
-                var subTotalVenda = $("#sub_total_venda").val();
-                $("#sub_total_venda").val((produto.attr("preco")));
-                console.log($("#sub_total_venda").val());
-
-                _posicaoTabela++;
+                $(".table-produtos tbody").append(linha);                
+                
+                var valorProduto = moedaParaFloat(produto.attr("preco")) * quantidade.val();
+                _subTotal = somar(_subTotal, valorProduto);
+                
+                atualizarValorTotalVenda();
+                atualizarValoresVenda();
+                
+                          _posicaoTabela++;
                 $('.error_produto_id').text("");
             } else {
                 $('.error_produto_id').text("É necessário escolher um produto!");
             }
         });
     });
-</script>
-
-<script>
+    
     $(document).on('click', '.btn-remove-produto', function(e) {
         e.preventDefault();
+        var produtoPreco = $(this).attr("produto-preco");
+        var quantidade = $(this).attr("quantidade-produto");
+        
+        var valorProduto = moedaParaFloat(produtoPreco) * quantidade;
+        _subTotal = diminuir(_subTotal, valorProduto)
+
+        atualizarValorTotalVenda();
+        atualizarValoresVenda();
+
         $(this).closest('tr').remove();
     });
+
+    $(document).on('change', '#valor_desconto_venda', function(e){
+        e.preventDefault();
+
+        _desconto = moedaParaFloat( $(this).val() );
+        atualizarProcetagemDesconto();
+        atualizarValorTotalVenda();
+        atualizarValoresVenda();
+    });
+
+    $(document).on('change', '#desconto_venda', function(e){
+        e.preventDefault();
+
+        _procDesconto = moedaParaFloat( $(this).val() );
+        atualizarValorDesconto();
+        atualizarValorTotalVenda();
+        atualizarValoresVenda();
+    });
+
+    function somar(a, b){
+        return a + b;
+    }
+
+    function diminuir(a, b){
+        return a - b;
+    }
+
+    function moedaParaFloat(valor){
+        return parseFloat(valor.replace(",", "."));
+    }
+
+    function floatParaMoeda(valor){
+        return valor.toLocaleString("pt-BR", { style: "currency" , currency:"BRL"});
+    }
+
+    function atualizarValoresVenda(){
+        $("#sub_total_venda").val(floatParaMoeda(_subTotal));
+        $("#valor_desconto_venda").val(floatParaMoeda(_desconto));
+        $("#desconto_venda").val(_procDesconto);
+        $("#valor_total_venda").val(floatParaMoeda(_total));
+    }
+
+    function atualizarValorTotalVenda(){
+        _total = diminuir(_subTotal, _desconto);
+    }
+
+    function atualizarProcetagemDesconto(){
+        _procDesconto = (100 * _desconto) / _subTotal; 
+    }
+
+    function atualizarValorDesconto(){
+        _desconto = (_subTotal * _procDesconto) / 100; 
+    }
+
 </script>
 
 @endsection
